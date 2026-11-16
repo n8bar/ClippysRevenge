@@ -247,13 +247,13 @@
       this.player.setFlipX(this.facing < 0);
       const jump = Phaser.Input.Keyboard.JustDown(this.keys.space) || Phaser.Input.Keyboard.JustDown(this.keys.up) || Phaser.Input.Keyboard.JustDown(this.keys.arrowUp);
       if (jump && this.player.body.blocked.down) { this.player.setVelocityY(-480); this.beep(410, .09, 'triangle'); }
-      this.drones.children.iterate(drone => {
+      this.drones.getChildren().forEach(drone => {
         if (!drone || !drone.active) return;
         if (drone.x < drone.getData('left')) drone.body.setVelocityX(80);
         if (drone.x > drone.getData('right')) drone.body.setVelocityX(-80);
         drone.rotation = Math.sin(time / 280 + drone.x) * .06;
       });
-      this.projectiles.children.iterate(bolt => { if (bolt && bolt.active && time > bolt.getData('expires')) bolt.destroy(); });
+      this.projectiles.getChildren().forEach(bolt => { if (bolt && bolt.active && time > bolt.getData('expires')) bolt.destroy(); });
       if (time < this.lastHurt + 1000) this.player.alpha = Math.floor(time / 80) % 2 ? .4 : 1;
       else this.player.alpha = 1;
     }
