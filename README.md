@@ -18,4 +18,6 @@ Open `index.html` in a browser with an internet connection (p5.js loads from cdn
 
 ## Publishing
 
-The Pages GitHub Actions workflow deploys from the `main` branch. Under repository **Settings → Pages**, choose **GitHub Actions** as the build/deployment source if it isn't already enabled.
+The GitHub Pages workflow deploys **only from `release`**. Make game changes on `main`, then merge or cherry-pick the commits you want published into `release`.
+
+Under repository **Settings → Pages**, keep **GitHub Actions** selected as the deployment source.
