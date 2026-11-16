@@ -1,0 +1,27 @@
+name: Browser smoke test (Phaser)
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test driver
+        run: npm install --no-save playwright-core
+      - name: Verify game in Chrome
+        run: node tests/browser-smoke.cjs
+      - name: Upload screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phaser-smoke-screenshot
+          path: smoke-game.png
+          if-no-files-found: ignore
