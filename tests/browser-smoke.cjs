@@ -12,6 +12,7 @@ const { chromium } = require('playwright-core');
     const url = 'file://' + path.resolve(__dirname, '..', 'index.html');
     await page.goto(url, { waitUntil: 'load', timeout: 30000 });
     await page.waitForFunction(() => window.clippyGame?.scene?.getScene('Game')?.phase === 'intro');
+    console.log('BROWSER ERRORS BEFORE GAME STATE:', errors);
     const state = await page.evaluate(() => {
       const scene = window.clippyGame.scene.getScene('Game');
       return { phase: scene.phase, texture: scene.player.texture.key, canvas: document.querySelector('#game canvas')?.width, racks: scene.racks.getChildren().length, drones: scene.drones.getChildren().length };
