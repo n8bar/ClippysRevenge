@@ -29,7 +29,14 @@ const { chromium } = require('playwright-core');
     await page.keyboard.down('d');
     await page.waitForTimeout(600);
     await page.keyboard.up('d');
-    const after = await page.evaluate(() => window.clippyGame.scene.getScene('Game').player.x);
+    const movementDebug = await page.evaluate(() => {
+      const s = window.clippyGame.scene.getScene('Game');
+      return { phase: s.phase, rightKey: s.keys.right?.isDown, playerX: s.player.x,
+        velocityX: s.player.body?.velocity?.x, paused: s.physics.world.isPaused,
+        active: s.sys.isActive(), time: s.time.now };
+    });
+    const after = movementDebug.playerX;
+    console.log('MOVEMENT DEBUG', movementDebug, 'PAGE ERRORS', errors);
     assert(after > before + 30, `Movement failed: x ${before} -> ${after}`);
     await page.evaluate(() => {
       const s = window.clippyGame.scene.getScene('Game');
