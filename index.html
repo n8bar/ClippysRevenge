@@ -164,10 +164,11 @@
 
       this.drones = this.physics.add.group({ allowGravity: false });
       DRONE_X.forEach((x, i) => {
-        const drone = this.drones.create(x, FLOOR_Y - 47 - (i % 2) * 14, 'drone');
-        drone.setAllowGravity(false).setImmovable(true).setDepth(15);
+        const drone = this.physics.add.sprite(x, FLOOR_Y - 47 - (i % 2) * 14, 'drone');
+        this.drones.add(drone);
+        drone.body.setAllowGravity(false); drone.body.setImmovable(true); drone.setDepth(15);
         drone.setData('left', x - 105); drone.setData('right', x + 105);
-        drone.setVelocityX(i % 2 ? 75 : -75);
+        drone.body.setVelocityX(i % 2 ? 75 : -75);
       });
       this.projectiles = this.physics.add.group({ allowGravity: false });
       this.exit = this.physics.add.staticImage(WORLD - 115, FLOOR_Y - 65, 'exit').setDepth(12);
@@ -248,8 +249,8 @@
       if (jump && this.player.body.blocked.down) { this.player.setVelocityY(-480); this.beep(410, .09, 'triangle'); }
       this.drones.children.iterate(drone => {
         if (!drone || !drone.active) return;
-        if (drone.x < drone.getData('left')) drone.setVelocityX(80);
-        if (drone.x > drone.getData('right')) drone.setVelocityX(-80);
+        if (drone.x < drone.getData('left')) drone.body.setVelocityX(80);
+        if (drone.x > drone.getData('right')) drone.body.setVelocityX(-80);
         drone.rotation = Math.sin(time / 280 + drone.x) * .06;
       });
       this.projectiles.children.iterate(bolt => { if (bolt && bolt.active && time > bolt.getData('expires')) bolt.destroy(); });
