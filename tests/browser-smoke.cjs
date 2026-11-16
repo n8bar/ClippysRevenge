@@ -44,6 +44,14 @@ const { chromium } = require('playwright-core');
       s.player.setVelocity(0, 0);
     });
     await page.keyboard.press('j');
+    await page.waitForTimeout(120);
+    console.log('SHOT DEBUG', await page.evaluate(() => {
+      const s = window.clippyGame.scene.getScene('Game');
+      return { lastShot: s.lastShot, time: s.time.now, destroyed: s.destroyed,
+        projectiles: s.projectiles.getChildren().map(b => ({ x: b.x, y: b.y, active: b.active, vel: b.body?.velocity?.x, bodyEnabled: b.body?.enable })),
+        racks: s.racks.getChildren().slice(0,1).map(r => ({ x:r.x, y:r.y, online:r.getData('online'), bodyEnabled:r.body?.enable })),
+        player: { x:s.player.x, y:s.player.y }, phase: s.phase };
+    }), 'PAGE ERRORS', errors);
     await page.waitForFunction(() => window.clippyGame.scene.getScene('Game').destroyed >= 1, null, { timeout: 5000 });
     assert.deepEqual(errors, [], 'Browser console errors');
     console.log('PASS browser: render, Clippy, eight racks, four drones, start, movement, and electric attack.');
