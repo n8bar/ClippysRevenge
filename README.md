@@ -1,23 +1,33 @@
 # Clippy's Revenge
 
-Clippy is back, jealous of Copilot and determined to short-circuit every server in headquarters.
+Clippy, the jealous AI paperclip, infiltrates corporate HQ to short-circuit all eight Copilot server racks.
 
-A single-page **p5.js** browser platformer.
+**[Play the game](https://n8bar.github.io/ClippysRevenge/)**
 
-## Play
+Built with **Phaser 4.2.1**. The complete game (including its artwork and styling) is in `index.html`. No build step or external art assets required. Phaser itself loads from a CDN.
 
-https://n8bar.github.io/ClippysRevenge/
+## Controls
 
-Move with **A/D** or the arrow keys; jump with **W**, Up or Space; zap with **J** or **X**. **P** pauses, **R** restarts and **M** mutes sound.
+- **A / D** or **Left / Right**: move
+- **W**, **Up** or **Space**: jump
+- **J** or **X**: zap
+- **P**: pause/resume
+- **R**: restart
+- **M**: mute/unmute
 
-Destroy all eight Copilot server racks and reach the exit without losing all five hearts. Drones patrol the corridors.
+Zap all 8 racks, avoid or zap drones, and reach the green exit. You have 5 hearts.
 
-## Run locally
+## Development and publishing
 
-Open `index.html` in a browser with an internet connection (p5.js loads from cdnjs).
+- `main` is the development branch.
+- `release` is the published GitHub Pages branch.
 
-## Publishing
+The workflow under `.github/workflows/pages.yml` deploys **only** the `release` branch. Changes to `main` do not publish automatically.
 
-The GitHub Pages workflow deploys **only from `release`**. Make game changes on `main`, then merge or cherry-pick the commits you want published into `release`.
+## Running locally
 
-Under repository **Settings → Pages**, keep **GitHub Actions** selected as the deployment source.
+Open `index.html` in a browser with internet access, or serve the repository with `python -m http.server 8000`.
+
+## Verification
+
+Run `node --check` against the JavaScript source (inlined into `index.html`) before release; the game should also be tested interactively in a browser.
