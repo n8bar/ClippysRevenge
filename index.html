@@ -263,7 +263,7 @@
       this.lastShot = this.time.now;
       const bolt = this.physics.add.image(this.player.x + this.facing * 29, this.player.y + 3, 'bolt');
       this.projectiles.add(bolt);
-      bolt.setAllowGravity(false).setVelocityX(this.facing * 710).setDepth(17);
+      bolt.body.setAllowGravity(false); bolt.body.setVelocityX(this.facing * 710); bolt.setDepth(17);
       bolt.setFlipX(this.facing < 0);
       bolt.setData('expires', this.time.now + 680);
       this.beep(660, .08, 'sawtooth');
